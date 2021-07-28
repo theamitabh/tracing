@@ -1,5 +1,8 @@
 package com.acheekoth.tracing;
 
+import io.jaegertracing.Configuration;
+import io.jaegertracing.internal.JaegerTracer;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -12,6 +15,11 @@ public class TracingDemoApplication {
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
 		return restTemplateBuilder.build();
+	}
+
+	@Bean
+	public  JaegerTracer getTracer() {
+		return Configuration.fromEnv("EShop").getTracer();
 	}
 
 	public static void main(String[] args) {
