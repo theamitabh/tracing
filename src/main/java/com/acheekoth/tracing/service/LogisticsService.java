@@ -11,8 +11,8 @@ public class LogisticsService {
     @Autowired 
     private Tracer tracer;
 
-    public String transport(Span parent) {
-        Span span = tracer.buildSpan("transport").asChildOf(parent).start();
+    public String transport() {
+        Span span = tracer.buildSpan("transport").start();
         // Add a random delay to the service
         try {
             Thread.sleep((long) (Math.random() * 1000));

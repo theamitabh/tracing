@@ -12,8 +12,8 @@ public class InventoryService {
     @Autowired
     Tracer tracer;
 
-    public String createOrder(Span parent) {
-        Span span = tracer.buildSpan("createOrder").asChildOf(parent).start();
+    public String createOrder() {
+        Span span = tracer.buildSpan("createOrder").start();
         // Add a random delay to the service
         try {
             Thread.sleep((long) (Math.random() * 1000));

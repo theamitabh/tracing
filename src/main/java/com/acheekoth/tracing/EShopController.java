@@ -34,10 +34,16 @@ public class EShopController {
     public String checkout(@RequestHeader HttpHeaders headers) {
         Span span = tracer.buildSpan("checkout").start();
         String result= "";
-        result = result + inventoryService.createOrder(span) +System.lineSeparator();
-        result = result + billingService.payment(span)+System.lineSeparator();
-        result += deliveryService.arrangeDelivery(span);
-        span.finish();
-        return result;
+        try {
+            tracer.scopeManager().activate(span);
+            result = result + inventoryService.createOrder() + System.lineSeparator();
+            result = result + billingService.payment()+ System.lineSeparator();
+            result += deliveryService.arrangeDelivery();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            span.finish();
+            return result;
+        }
     }
 }
