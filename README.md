@@ -56,7 +56,7 @@ Forwarding from [::1]:16686 -> 16686
 ```	curl http://127.0.0.1:8080/checkout ```
 
 ### View Jaeger UI
-cess Jaeger UI at http://localhost:16686/
+Access Jaeger UI at http://localhost:16686/
 
 ## Jaeger UI Screen
 ![TracesView](jaegerui.jpg)
