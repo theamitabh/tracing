@@ -4,6 +4,7 @@ import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.propagation.Format;
 import io.opentracing.tag.Tags;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,13 +26,15 @@ public class EShopController {
     @RequestMapping(value = "/checkout")
     public String checkout(@RequestHeader HttpHeaders headers) {
         Span span = tracer.buildSpan("checkout").start();
+        span.setBaggageItem("user", headers.getFirst("user"));
         String result = "";
         try {
             HttpHeaders outboundHeaders = new HttpHeaders();
             tracer.inject(span.context(), Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(outboundHeaders));
+            HttpEntity<String> entity = new HttpEntity<>("", outboundHeaders);
+            
             // Use HTTP GET in this demo. In a real world use case,We should use HTTP POST instead.
             // The three services are bundled in one jar for simplicity. To make it work,define three services in Kubernets.
-            HttpEntity<String> entity = new HttpEntity<>("", outboundHeaders);
             result += restTemplate.exchange("http://inventory:8080/createOrder", HttpMethod.GET, entity, String.class).getBody();
             result += "<BR>";
             result += restTemplate.exchange("http://billing:8080/payment", HttpMethod.GET, entity, String.class).getBody();

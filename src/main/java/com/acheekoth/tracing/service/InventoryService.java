@@ -37,6 +37,7 @@ public class InventoryService {
         } finally {
             span.finish();
         }
-        return "Your order has been created!";
+        String user = span.getBaggageItem("user");
+        return user + "'s order has been created!";
     }
 }

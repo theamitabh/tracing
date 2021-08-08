@@ -26,7 +26,6 @@ public class LogisticsService {
     public String transport(@RequestHeader HttpHeaders headers) {
         SpanContext parent = tracer.extract(Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(headers));
         Span span = tracer.buildSpan("transport").asChildOf(parent).start();
-        
         // Add a random delay to the service
         try {
             Thread.sleep((long) (Math.random() * 1000));
@@ -35,7 +34,7 @@ public class LogisticsService {
         } finally {
             span.finish();
         }
-
-        return "Your order is on the way!";
+        String user = span.getBaggageItem("user");
+        return user + "'s order is on the way!";
     }
 }

@@ -44,6 +44,7 @@ public class DeliveryService {
         } finally {
             span.finish();
         }
-        return result + "<BR>Your order is delivered!";
+        String user = span.getBaggageItem("user");
+        return result + "<BR>" + user + "'s order is delivered!";
     }
 }

@@ -36,7 +36,8 @@ public class BillingService {
         } finally {
             span.finish();
         }
-        return "Your order has been paid!";
+        String user = span.getBaggageItem("user");
+        return user + "'s order has been paid!";
     }
 }
 
