@@ -2,8 +2,8 @@ FROM openjdk:alpine
 
 ENV APP_HOME /app/
 
-# Jaeger Env  values
-# For Linux
+# Jaeger Env  values 05Aug
+# For Linux 
 # ENV JAEGER_ENDPOINT="http://127.0.0.1:14268/api/traces"
 ENV JAEGER_ENDPOINT="http://host.docker.internal:14268/api/traces"
 ENV JAEGER_SAMPLER_TYPE=const

@@ -1,7 +1,12 @@
 package com.acheekoth.tracing.service;
 
 import io.opentracing.Span;
+import io.opentracing.SpanContext;
 import io.opentracing.Tracer;
+import io.opentracing.propagation.Format;
+
+import com.acheekoth.tracing.HtttpHeaderCarrier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+
+
 
 @RestController
 public class DeliveryService {
@@ -22,11 +30,14 @@ public class DeliveryService {
 
     @RequestMapping(value = "/arrangeDelivery")
     public String arrangeDelivery(@RequestHeader HttpHeaders headers) {
-        Span span = tracer.buildSpan("arrangeDelivery").start();
+        SpanContext parent = tracer.extract(Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(headers));
+        Span span = tracer.buildSpan("arrangeDelivery").asChildOf(parent).start();
         String result = "";
         try {
             Thread.sleep((long) (Math.random() * 1000));
-            HttpEntity entity = new HttpEntity<>("");
+            HttpHeaders outboundHeaders = new HttpHeaders();
+            tracer.inject(span.context(), Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(outboundHeaders));
+            HttpEntity<String> entity = new HttpEntity<>("", outboundHeaders);
             result += restTemplate.exchange("http://logistics:8080/transport", HttpMethod.GET, entity, String.class).getBody();
         } catch (InterruptedException e) {
             e.printStackTrace();

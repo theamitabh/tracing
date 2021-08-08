@@ -1,12 +1,20 @@
 package com.acheekoth.tracing.service;
 
+
 import io.opentracing.Span;
+import io.opentracing.SpanContext;
 import io.opentracing.Tracer;
+import io.opentracing.propagation.Format;
+
+import com.acheekoth.tracing.HtttpHeaderCarrier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 
 @RestController
 public class LogisticsService {
@@ -16,7 +24,9 @@ public class LogisticsService {
 
     @RequestMapping(value = "/transport")
     public String transport(@RequestHeader HttpHeaders headers) {
-        Span span = tracer.buildSpan("transport").start();
+        SpanContext parent = tracer.extract(Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(headers));
+        Span span = tracer.buildSpan("transport").asChildOf(parent).start();
+        
         // Add a random delay to the service
         try {
             Thread.sleep((long) (Math.random() * 1000));
