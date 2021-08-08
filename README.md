@@ -6,10 +6,10 @@
 git clone https://github.com/theamitabh/tracing.git
 
 mvn package
-docker build -t tracingdemo:8 .
+docker build -t tracingdemo:9 .
 docker login
-docker tag tracingdemo:8 amitprem/tracingdemo:8
-docker push amitprem/tracingdemo:8
+docker tag tracingdemo:9 amitprem/tracingdemo:9
+docker push amitprem/tracingdemo:9
 ```
 
 ### Get azure Kube cluster creds , kube nodes & deploy
