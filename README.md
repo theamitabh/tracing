@@ -40,7 +40,8 @@ Forwarding from [::1]:16686 -> 16686
 
 ### Test the checkout with user baggage parameter
 ```	**curl 127.0.0.1:8080/checkout --header "user: amitabh"
-amitabh's order has been created!<BR>amitabh's order has been paid!<BR>Your order is on the way!<BR>amitabh's order is delivered! ```
+amitabh's order has been created!<BR>amitabh's order has been paid!<BR>Your order is on the way!<BR>amitabh's order is delivered! 
+```
 
 ### View Jaeger UI
 cess Jaeger UI at http://localhost:16686/
