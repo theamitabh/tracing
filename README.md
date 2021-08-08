@@ -90,7 +90,7 @@ kubectl get svc
 
 ### Create an Istio Gateway as the ingress for the eShop application
 ```
-kubectl apply -f istio\
+_kubectl apply -f istio/_
 ```
 
 ### Port forward API & JAEGERUI ports to localhost
@@ -99,18 +99,15 @@ kubectl port-forward service/eshop 8080:8080
 Forwarding from 127.0.0.1:8080 -> 8080
 Forwarding from [::1]:8080 -> 8080
 
-kubectl port-forward service/jaeger 16686:16686
-Forwarding from 127.0.0.1:16686 -> 16686
-Forwarding from [::1]:16686 -> 16686
-
+#optional - Use the public IP of the service/istio-ingressgateway instead
+kubectl port-forward service/istio-ingressgateway 8080:80 -n istio-system
 ```
 
 ### Test the checkout with user baggage parameter
-```	**curl 127.0.0.1:8080/checkout --header "user: amitabh"
-amitabh's order has been created!<BR>amitabh's order has been paid!<BR>Your order is on the way!<BR>amitabh's order is delivered! ```
+```	**curl 127.0.0.1:8080/checkout 
 
 ### View Jaeger UI
-cess Jaeger UI at http://localhost:16686/
+cess Jaeger UI at http://public-ip-of-ingress-gateway
 
 ## Jaeger UI Screen
 ![TracesView](jaegerui.jpg)
