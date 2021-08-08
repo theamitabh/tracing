@@ -72,10 +72,10 @@ kube-public       Active   5d1h   kubernetes.io/metadata.name=kube-public
 git clone https://github.com/theamitabh/tracing.git
 
 mvn package
-docker build -t tracingdemo:10 .
+docker build -t tracingdemo:11 .
 docker login
-docker tag tracingdemo:10 amitprem/tracingdemo:10
-docker push amitprem/tracingdemo:10
+docker tag tracingdemo:11 amitprem/tracingdemo:11
+docker push amitprem/tracingdemo:11
 ```
 
 ###  Deploy eShop application microservices
@@ -90,7 +90,7 @@ kubectl get svc
 
 ### Create an Istio Gateway as the ingress for the eShop application
 ```
-_kubectl apply -f istio/_
+_kubectl apply -f istio/
 ```
 
 ### Port forward API & JAEGERUI ports to localhost

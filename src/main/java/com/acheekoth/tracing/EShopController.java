@@ -22,6 +22,10 @@ public class EShopController {
             // Use HTTP GET in this demo. In a real world use case,We should use HTTP POST instead.
             // The three services are bundled in one jar for simplicity. To make it work,define three services in Kubernets.
             HttpHeaders outboundHeaders = new HttpHeaders();
+            
+            //copy headers from the incoming HTTP request to the outgoing HTTP request.
+            HeaderUtil.copyTracingHeaders(headers,outboundHeaders);
+            
             HttpEntity<String> entity = new HttpEntity<>("",outboundHeaders);
             result += restTemplate.exchange("http://inventory:8080/createOrder", HttpMethod.GET, entity, String.class).getBody();
             result += "<BR>";
