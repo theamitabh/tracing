@@ -94,7 +94,7 @@ spec:
     spec:
       containers:
         - name: eshop
-          image: amitprem/tracingdemo:9
+          image: amitprem/tracingdemo:10
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -118,7 +118,7 @@ spec:
     spec:
       containers:
         - name: inventory
-          image: amitprem/tracingdemo:9
+          image: amitprem/tracingdemo:10
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -142,7 +142,7 @@ spec:
     spec:
       containers:
         - name: billing
-          image: amitprem/tracingdemo:9
+          image: amitprem/tracingdemo:10
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -166,7 +166,7 @@ spec:
     spec:
       containers:
         - name: delivery
-          image: amitprem/tracingdemo:9
+          image: amitprem/tracingdemo:10
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
